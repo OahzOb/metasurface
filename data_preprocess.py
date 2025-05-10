@@ -28,7 +28,7 @@ def read_file_to_numpy(subscale:bool = True, origin: bool = False) -> Tuple[np.a
         mat_data = scipy.io.loadmat(os.path.join('data', datafile_list[choice]))
         parameter = mat_data['parameter'].astype(np.float32) # .mat默认为float64，torch默认接收float32
         real = mat_data['real'].astype(np.float32)
-        imag = mat_data['imag'].astype(np.float32) 
+        imag = mat_data['imag'].astype(np.float32)
     elif datafile_list[choice].endswith('.csv'):
         dataname = datafile_list[choice][-6:-4]
         magnitude_data = np.genfromtxt(os.path.join('data', 'magnitude_data_' + dataname + '.csv'), delimiter=',', skip_header=1)
@@ -107,20 +107,6 @@ class Dataset_transformed_Full(Dataset):
         if self.transform:
             spectra = self.transform(spectra)
         return spectra, spectra
-
-'''def prepare_data_PNN(batch_size:int, transform:transforms.Compose = None, split_ratio:float = 0.8, subscale = True) -> tuple:
-    parameter, real, imag, param_size, spectra_size, dataname = read_file_to_numpy(subscale = subscale)
-    dataset_real = Dataset_transformed_PNN(parameter, real, transform)
-    dataset_imag = Dataset_transformed_PNN(parameter, imag, transform)
-    train_size = int(split_ratio * len(dataset_real))
-    test_size = len(dataset_real) - train_size
-    train_dataset_real, test_dataset_real = random_split(dataset_real, [train_size, test_size])
-    train_dataset_imag, test_dataset_imag = random_split(dataset_imag, [train_size, test_size])
-    train_loader_real = DataLoader(train_dataset_real, batch_size = batch_size, shuffle = True)
-    test_loader_real = DataLoader(test_dataset_real, batch_size = batch_size, shuffle = False)
-    train_loader_imag = DataLoader(train_dataset_imag, batch_size = batch_size, shuffle = True)
-    test_loader_imag = DataLoader(test_dataset_imag, batch_size = batch_size, shuffle = False)
-    return train_loader_real, test_loader_real, train_loader_imag, test_loader_imag, param_size, spectra_size, dataname'''
 
 def prepare_data_PNN(
     batch_size: int,
