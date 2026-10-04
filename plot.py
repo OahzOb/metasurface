@@ -666,7 +666,9 @@ def visualize_mag_spec_comparison():
     test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 
     # 定义保存目录
-    save_dir = f'C:\\Programme\\projects\\linux\\metasurface\\{dataname}\\mag_spec_comparison'
+    # 相对路径，与上面几个 save_dir 一致；原先写的是本机的绝对路径，
+    # 既暴露了目录结构，换台机器也跑不起来。
+    save_dir = os.path.join('data', f'{dataname}', 'mag_spec_comparison')
     os.makedirs(save_dir, exist_ok=True)
     # 定义绘图参数
     img_size = (10, 5)
@@ -834,7 +836,7 @@ if __name__ == '__main__':
                  'PNNreal_22_timestamp1745980575.6689.txt',
                  'PNNimag_22_timestamp1746054681.3098.txt']
     for file in file_list:
-        file_path = f'C:\\Programme\\projects\\linux\\metasurface\\records\\{file}'
+        file_path = os.path.join('records', file)
         data = parse_log_file(file_path)
         plot_metrics1(data)'''
     pass
